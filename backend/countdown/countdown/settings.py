@@ -85,6 +85,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+AUTH_USER_MODEL = 'myuser.MyUser'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
