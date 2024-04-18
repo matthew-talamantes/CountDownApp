@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'rest_framework_simplejwt',
 
     # Local apps
     'myuser.apps.MyuserConfig',
@@ -158,4 +159,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ]
+}
+
+# Simple JWT settings
+SIMPLE_JWT = {
+    "USER_ID_FIELD": "uuid",
 }
