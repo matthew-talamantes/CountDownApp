@@ -179,4 +179,5 @@ REST_AUTH = {
     'JWT_AUTH_REFRESH_COOKIE': 'jwt-refresh-auth',
     'SESSION_LOGIN': False,
     'JWT_AUTH_HTTPONLY': False,
+    'LOGIN_SERIALIZER': 'myuser.serializers.CustomLoginSerializer',
 }
