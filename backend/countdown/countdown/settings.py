@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
 
     # Local apps
     'myuser.apps.MyuserConfig',
@@ -158,10 +161,22 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    ],
 }
 
 # Simple JWT settings
 SIMPLE_JWT = {
     "USER_ID_FIELD": "uuid",
+}
+
+# Dj rest auth settings
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'jwt-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'jwt-refresh-auth',
+    'SESSION_LOGIN': False,
+    'JWT_AUTH_HTTPONLY': False,
 }
