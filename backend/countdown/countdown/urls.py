@@ -21,7 +21,8 @@ from myuser.views import CustomRegistration
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/register/', CustomRegistration.as_view(), name='account_signup'),
+    path('accounts/', include('allauth.urls')),
     path('api-auth/', include('dj_rest_auth.urls')),
     path('api-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api-auth/register/', CustomRegistration.as_view(), name='account_signup'),
 ]
