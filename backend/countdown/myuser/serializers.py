@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers, exceptions
 from dj_rest_auth.serializers import LoginSerializer
 
+from .models import MyUser, Profile
+
 class CustomLoginSerializer(LoginSerializer):
     username = serializers.CharField(required=True, allow_blank=False)
     password = serializers.CharField(style={'input_type': 'password'})
@@ -32,3 +34,16 @@ class CustomLoginSerializer(LoginSerializer):
 
         attrs['user'] = user
         return attrs
+    
+class MyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = ('uuid', 'username')
+        read_only_fields = ('uuid', 'username')
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = MyUserSerializer()
+    friends = MyUserSerializer(many=True)
+    class Meta:
+        model = Profile
+        fields = ('user', 'profileImage', 'friends')
