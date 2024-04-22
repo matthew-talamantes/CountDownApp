@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'myuser.apps.MyuserConfig',
+    'counts.apps.CountsConfig',
 ]
 
 MIDDLEWARE = [
