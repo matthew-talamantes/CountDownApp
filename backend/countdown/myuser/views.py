@@ -1,8 +1,12 @@
 from django.core.validators import validate_email, ValidationError
 from django.http import JsonResponse
+
 from dj_rest_auth.registration.views import RegisterView
 from allauth.account import signals
 from allauth.account.utils import send_email_confirmation
+
+from .models import MyUser, Profile
+from .serializers import MyUserSerializer, ProfileSerializer
 
 # Create your views here.
 class CustomRegistration(RegisterView):
