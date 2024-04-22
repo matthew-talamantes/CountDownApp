@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 
 from myuser.views import CustomRegistration
+from counts.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('api-auth/', include('dj_rest_auth.urls')),
     path('api-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api-auth/register/', CustomRegistration.as_view(), name='account_signup'),
+    path('', HomeView.as_view(), name='home'),
 ]
 
 if settings.DEBUG:
