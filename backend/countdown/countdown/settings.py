@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Local apps
     'myuser.apps.MyuserConfig',
     'counts.apps.CountsConfig',
+    'theme.apps.ThemeConfig',
 ]
 
 MIDDLEWARE = [
@@ -188,3 +189,9 @@ REST_AUTH = {
     'JWT_AUTH_HTTPONLY': False,
     'LOGIN_SERIALIZER': 'myuser.serializers.CustomLoginSerializer',
 }
+
+# Tailwind settings
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
