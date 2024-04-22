@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'myuser.apps.MyuserConfig',
     'counts.apps.CountsConfig',
     'theme.apps.ThemeConfig',
+
+    # Dev browser reload
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +70,7 @@ MIDDLEWARE = [
 
     # Third-party middleware
     'allauth.account.middleware.AccountMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'countdown.urls'
