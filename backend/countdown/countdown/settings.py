@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
+import os
 from datetime import timedelta
 from pathlib import Path
 from django.forms.renderers import TemplatesSetting
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+
+load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ibac0m9_@d_%j!!za)opwp9m8&ggjq^1v7f_1k1uf+pvva@(c#'
@@ -205,7 +210,8 @@ INTERNAL_IPS = [
     '127.0.0.1'
 ]
 # Only for desktop
-NPM_BIN_PATH = "npm.cmd"
+if os.getenv("HOST_OS") == 'windows':
+    NPM_BIN_PATH = "npm.cmd"
 
 # Form template settings
 class CustomFormRenderer(TemplatesSetting):
