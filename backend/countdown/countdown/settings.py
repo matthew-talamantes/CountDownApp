@@ -168,6 +168,9 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_FORMS = {
+    'login': 'myuser.forms.CustomLoginForm',
+}
 
 # Rest framework settings
 REST_FRAMEWORK = {

@@ -1,0 +1,10 @@
+{% extends 'counts/base.html' %}
+
+{% block content %}
+<h1 class="text-8xl">Sign In</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button class="btn btn-primary" type="submit">Sign In</button>
+</form>
+{% endblock content %}
