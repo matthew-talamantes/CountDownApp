@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+from django.forms.renderers import TemplatesSetting
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.forms',
 
     # Third-party apps
     'allauth',
@@ -201,3 +203,9 @@ INTERNAL_IPS = [
 ]
 # Only for desktop
 NPM_BIN_PATH = "npm.cmd"
+
+# Form template settings
+class CustomFormRenderer(TemplatesSetting):
+    form_template_name = 'counts/form_template.html'
+
+FORM_RENDERER = 'countdown.settings.CustomFormRenderer'
