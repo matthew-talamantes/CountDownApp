@@ -18,10 +18,12 @@
 </head>
 
 <body>
-    <header class="navbar bg-base-300">
+    <header x-data="navbar" @resize.window="updateWidth; console.log(windowWidth)" class="navbar bg-base-300">
         <div class="navbar-start">
-            <a class="btn btn-ghost text-xl">CountdownApp</a>
-            <div class="dropdown">
+            <a class="btn btn-ghost text-3xl">CountdownApp</a>
+        </div>
+        <div class="navbar-end">
+            <div :class="windowWidth < 1024 ? 'dropdown dropdown-end' : ''">
                 <div class="btn btn-ghost lg:hidden" tabindex="0" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         class="inline-block w-6 h-6 stroke-current">
@@ -30,8 +32,10 @@
                     </svg>
                 </div>
                 <ul tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a>Item 1</a></li>
+                    :class="windowWidth < 1024 ? 'menu menu-md dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52' : 'menu menu-horizontal px-1 flex justify-end items-center gap-2'">
+                    <li class="text-xl"><a>Item 1</a></li>
+                    <li class="text-xl"><a>Item 2</a></li>
+                    <li class="text-xl"><a class="btn btn-primary">Item 3</a></li>
                 </ul>
             </div>
         </div>

@@ -1,3 +1,6 @@
 document.addEventListener('alpine:init', () => {
-    console.log('Alpine initialized');
+    Alpine.data('navbar', () => ({
+        windowWidth: window.innerWidth,
+        updateWidth() { this.windowWidth = window.innerWidth;},
+    }));
 });
