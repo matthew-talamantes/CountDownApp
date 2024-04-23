@@ -12,9 +12,28 @@
     <title>Countdown</title>
     {% endif %}
     {% tailwind_css %}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
+    <header class="navbar bg-base-300">
+        <div class="navbar-start">
+            <a class="btn btn-ghost text-xl">CountdownApp</a>
+            <div class="dropdown">
+                <div class="btn btn-ghost lg:hidden" tabindex="0" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        class="inline-block w-6 h-6 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </div>
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a>Item 1</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
     {% block content %}{% endblock content %}
 </body>
 
