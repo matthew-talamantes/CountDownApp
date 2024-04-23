@@ -27,7 +27,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('api-auth/', include('dj_rest_auth.urls')),
     path('api-auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('api-auth/register/', CustomRegistration.as_view(), name='account_signup'),
+    path('api-auth/register/', CustomRegistration.as_view(), name='api_account_signup'),
     path('__reload__/', include('django_browser_reload.urls')),
     path('', HomeView.as_view(), name='home'),
 ]
