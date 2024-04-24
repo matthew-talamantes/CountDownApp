@@ -1,0 +1,20 @@
+{% extends 'counts/base.html' %}
+
+{% block content %}
+<section class="container mx-auto mt-8 px-4 max-w-[500px]">
+    <h1 class="text-5xl my-2">Sign Up</h1>
+    <article class="container mx-auto sm:px-4">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <div class="flex flex-row justify-end">
+                <button class="btn btn-primary mt-2" type="submit">Register</button>
+            </div>
+        </form>
+    </article>
+    <article class="container mx-auto sm:px-4 mt-4">
+        <p class="text-center">Already have an account? <a class="underline" href="{% url 'account_login' %}">Login</a>
+        </p>
+    </article>
+</section>
+{% endblock content %}

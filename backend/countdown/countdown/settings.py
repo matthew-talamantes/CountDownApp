@@ -175,6 +175,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 ACCOUNT_FORMS = {
     'login': 'myuser.forms.CustomLoginForm',
+    'signup': 'myuser.forms.CustomSignupForm',
 }
 
 # Rest framework settings

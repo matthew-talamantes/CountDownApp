@@ -13,7 +13,8 @@
     {% for field in form %}
     <div class="">
         {{ field.errors }}
-        <label class="input input-bordered flex items-center gap-2" for="{{ field.id_for_label}}">
+        <label class="input input-bordered flex items-center gap-2{% if field.errors %} input-error{% endif %}"
+            for="{{ field.id_for_label}}">
             <span class="font-semibold">{{ field.label }}</span>
             {{ field }}
         </label>
