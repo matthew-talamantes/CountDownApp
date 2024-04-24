@@ -20,7 +20,7 @@
 <body>
     <header x-data="navbar" @resize.window="updateWidth; console.log(windowWidth)" class="navbar bg-base-300">
         <div class="navbar-start">
-            <a class="btn btn-ghost text-3xl">CountdownApp</a>
+            <a class="btn btn-ghost text-3xl" href="{% url 'home' %}">CountdownApp</a>
         </div>
         <div class="navbar-end">
             <div :class="windowWidth < 1024 ? 'dropdown dropdown-end' : ''">
@@ -35,12 +35,15 @@
                     :class="windowWidth < 1024 ? 'menu menu-md dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52' : 'menu menu-horizontal px-1 flex justify-end items-center gap-2'">
                     <li class="text-xl"><a>Item 1</a></li>
                     <li class="text-xl"><a>Item 2</a></li>
-                    <li class="text-xl"><a class="btn btn-primary">Item 3</a></li>
+                    <li class="text-xl"><a class="btn btn-primary text-xl" href="{% url 'account_login' %}">Login</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </header>
-    {% block content %}{% endblock content %}
+    <main class="md:container px-6 mx-auto">
+        {% block content %}{% endblock content %}
+    </main>
 </body>
 
 </html>
