@@ -1,0 +1,18 @@
+{% extends 'counts/base.html' %}
+
+{% block content %}
+<section class="container mx-auto mt-8 px-4 max-w-[400px]">
+    <h1 class="text-5xl my-2">Logout</h1>
+    <article class="container mx-auto sm:px-4">
+        <p class="text-center">Are you sure you want to logout?</p>
+        <form id="logout-form" method="POST">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+        <div class="flex flex-row gap-2 justify-end mt-4">
+            <a href="{% url 'home' %}" class="btn btn-outline">Cancel</a>
+            <button class="btn btn-primary" form="logout-form" type="submit">Logout</button>
+        </div>
+    </article>
+</section>
+{% endblock content %}
