@@ -1,0 +1,29 @@
+{% extends 'counts/base.html' %}
+
+{% block content %}
+<section class="container mx-auto mt-8 px-4 max-w-[700px]">
+    <h1 class="text-5xl my-2">Confirm Email Address</h1>
+    <article class="container mx-auto sm:px-4 mt-6">
+        {% if confirmation %}
+        {% if can_confirm %}
+        <p>Please confirm that {{ confirmation.email_address.email }} is an email address for user:
+            {{ confirmation.email_address.user }}</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <div class="flex flex-row justify-end mt-4 gap-2">
+                <a class="btn btn-outline" href="{% url 'home' %}">Cancel</a>
+                <button class="btn btn-primary" type="submit">Confirm</button>
+            </div>
+        </form>
+        {% else %}
+        <p>Unable to confirm {{ confirmation.email_address.email }} because it is already confirmed by a different
+            account.</p>
+        {% endif %}
+        {% else %}
+        <p class="text-center">Email confirmation link is invalid or expired. Please
+            request a new confirmation <a href="{% url 'account_email' %}">link</a>.</p>
+        {% endif %}
+    </article>
+</section>
+{% endblock content %}
