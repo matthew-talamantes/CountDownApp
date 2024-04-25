@@ -1225,6 +1225,11 @@ html {
   border-end-end-radius: inherit;
 }
 
+.link {
+  cursor: pointer;
+  text-decoration-line: underline;
+}
+
 .menu {
   display: flex;
   flex-direction: column;
@@ -1670,6 +1675,16 @@ html {
   text-align: inherit;
 }
 
+.link:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
 :where(.menu li:empty) {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-bc,oklch(var(--bc)/var(--tw-bg-opacity)));
@@ -1977,6 +1992,10 @@ html {
   margin-top: 2rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -2005,12 +2024,20 @@ html {
   width: 1.5rem;
 }
 
+.max-w-\[400px\] {
+  max-width: 400px;
+}
+
 .max-w-\[500px\] {
   max-width: 500px;
 }
 
-.max-w-\[400px\] {
-  max-width: 400px;
+.max-w-\[600px\] {
+  max-width: 600px;
+}
+
+.max-w-\[700px\] {
+  max-width: 700px;
 }
 
 .shrink-0 {
