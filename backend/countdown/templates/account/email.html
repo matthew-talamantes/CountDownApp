@@ -1,78 +1,66 @@
 {% extends "counts/base.html" %}
-{% load allauth i18n %}
-{% block head_title %}
-{% trans "Email Addresses" %}
-{% endblock head_title %}
+
 {% block content %}
 <div class="container mx-auto max-w-[700px]">
     <h1 class="text-5xl">Manage Email Addresses</h1>
     {% if emailaddresses %}
     <div class="container mx-auto my-6 max-w-[600px]">
-        <p>{% trans 'The following email addresses are associated with your account:' %}</p>
+        <p>The following email addresses are associated with your account:</p>
         {% url 'account_email' as email_url %}
 
-        {% element form form=form action=email_url method="post" %}
-        {% slot body %}
-        {% csrf_token %}
-        {% for radio in emailaddress_radios %}
-        {% with emailaddress=radio.emailaddress %}
-        <div class="form-control my-4">
-            <label for="{{ radio.id }}" class="label cursor-pointer">
-                <span class="label-text text-xl">{{ emailaddress.email }}</span>
-                <div class="flex flex-row justify-end items-center gap-1 mx-3 grow">
-                    {% if emailaddress.primary %}
-                    <span class="badge badge-primary badge-md">Primary</span>
-                    {% endif %}
-                    {% if emailaddress.verified %}
-                    <span class="badge badge-success badge-md">Verified</span>
-                    {% else %}
-                    <span class="badge badge-warning badge-md">Unverified</span>
-                    {% endif %}
-                </div>
-                <input type="radio" class="radio checked:bg-blue-500" name="email" value="{{ emailaddress.email }}"
-                    id="{{ radio.id }}" {% if radio.checked %}checked{% endif %}>
-            </label>
-        </div>
-        {% endwith %}
-        {% endfor %}
-        {% endslot %}
-        {% slot actions %}
-        <div class="flex flex-row justify-end items-center gap-2">
-            <button type="submit" name="action_primary" class="btn btn-primary">Make Primary</button>
-            <button type="submit" name="action_send" class="btn btn-secondary">Re-send Verification</button>
-            <button type="submit" name="action_remove" class="btn btn-error">Remove</button>
-        </div>
-        {% endslot %}
-        {% endelement %}
+        <form method="POST" action="{{ email_url }}">
+            {% csrf_token %}
+            {% for radio in emailaddress_radios %}
+            {% with emailaddress=radio.emailaddress %}
+            <div class="form-control my-4">
+                <label for="{{ radio.id }}" class="label cursor-pointer">
+                    <span class="label-text text-xl">{{ emailaddress.email }}</span>
+                    <div
+                        class="flex flex-col  justify-center items-end sm:flex-row sm:justify-end sm:items-center gap-1 mx-3 grow">
+                        {% if emailaddress.primary %}
+                        <span class="badge badge-primary badge-md">Primary</span>
+                        {% endif %}
+                        {% if emailaddress.verified %}
+                        <span class="badge badge-success badge-md">Verified</span>
+                        {% else %}
+                        <span class="badge badge-warning badge-md">Unverified</span>
+                        {% endif %}
+                    </div>
+                    <input type="radio" class="radio checked:bg-blue-500" name="email" value="{{ emailaddress.email }}"
+                        id="{{ radio.id }}" {% if radio.checked %}checked{% endif %}>
+                </label>
+            </div>
+            {% endwith %}
+            {% endfor %}
+            <div class="flex flex-wrap sm:flex-nowrap flex-row justify-end items-center gap-2">
+                <button type="submit" name="action_primary" class="btn btn-primary">Make Primary</button>
+                <button type="submit" name="action_send" class="btn btn-secondary">Re-send Verification</button>
+                <button type="submit" name="action_remove" class="btn btn-error">Remove</button>
+            </div>
+        </form>
     </div>
     {% else %}
     {% include "account/snippets/warn_no_email.html" %}
     {% endif %}
     {% if can_add_email %}
-    {% element h2 %}
-    {% trans "Add Email Address" %}
-    {% endelement %}
+    <h2 class="text-3xl">Add Email Address</h2>
     {% url 'account_email' as action_url %}
-    {% element form form=form method="post" action=action_url %}
-    {% slot body %}
-    {% csrf_token %}
-    {% element fields form=form %}
-    {% endelement %}
-    {% endslot %}
-    befac
-    {% slot actions %}
-    {% element button name="action_add" type="submit" %}
-    {% trans "Add Email" %}
-    {% endelement %}
-    {% endslot %}
-    {% endelement %}
+    <div class="container mx-auto my-6 max-w-[600px]">
+        <form method="POST" action="{{ action_url }}">
+            {% csrf_token %}
+            {{ form }}
+            <div class="flex flex-row justify-end items-center">
+                <button type="submit" name="action_add" class="btn btn-primary">Add Email</button>
+            </div>
+        </form>
+    </div>
     {% endif %}
 </div>
 {% endblock content %}
 {% block extra_body %}
 <script type="text/javascript">
     (function () {
-        var message = "{% trans 'Do you really want to remove the selected email address?' %}";
+        var message = "Do you really want to remove the selected email address?";
         var actions = document.getElementsByName('action_remove');
         if (actions.length) {
             actions[0].addEventListener("click", function (e) {
