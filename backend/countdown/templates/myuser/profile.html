@@ -1,6 +1,15 @@
 {% extends 'counts/base.html' %}
 {% block content %}
-<h1>Profile</h1>
-<p>Hi {{ user.username }}!</p>
-<p>Your email is: {{ user.email }}</p>
+<section>
+    <div class="flex flex-row justify-between items-center">
+        <div>
+            <h1 class="text-5xl">Profile</h1>
+            <p>Hi {{ user.username }}!</p>
+        </div>
+        <a class="btn btn-primary">Edit Profile</a>
+    </div>
+    <img src="{{ profile.profileImage.url }}" alt="Profile Picture">
+    <p>Your email is: {{ user.email }}</p>
+    <a class="btn btn-primary btn-sm" href="{% url 'account_email' %}">Manage Emails</a>
+</section>
 {% endblock content %}

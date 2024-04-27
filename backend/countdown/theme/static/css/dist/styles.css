@@ -1992,6 +1992,27 @@ html {
   padding-right: 0.563rem;
 }
 
+.btn-sm {
+  height: 2rem;
+  min-height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.btn-square:where(.btn-sm) {
+  height: 2rem;
+  width: 2rem;
+  padding: 0px;
+}
+
+.btn-circle:where(.btn-sm) {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+  padding: 0px;
+}
+
 .menu-horizontal {
   display: inline-flex;
   flex-direction: row;
@@ -2184,6 +2205,10 @@ html {
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
 }
 
 .gap-1 {
