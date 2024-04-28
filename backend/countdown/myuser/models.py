@@ -15,7 +15,7 @@ class MyUser(AbstractUser):
     
 class Profile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    profileImage = models.ImageField(upload_to='profileImages/', default='default.jpg', blank=True, null=True)
+    profileImage = models.ImageField(verbose_name='Profile Image', upload_to='profileImages/', default='default.jpg', blank=True, null=True)
     friends = models.ManyToManyField(MyUser, related_name='friends', blank=True)
 
     def __str__(self):
