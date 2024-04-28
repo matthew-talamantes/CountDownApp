@@ -1,7 +1,7 @@
 from django.core.validators import validate_email, ValidationError
 from django.http import JsonResponse
-from django.views.generic import (DetailView)
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import (DetailView, UpdateView)
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from dj_rest_auth.registration.views import RegisterView
 from allauth.account import signals
@@ -47,3 +47,15 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+    
+class UserProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Profile
+    template_name = 'myuser/profile_update.html'
+    fields = ['profileImage']
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+    def test_func(self):
+        profile = self.get_object()
+        return self.request.user == profile.user  
