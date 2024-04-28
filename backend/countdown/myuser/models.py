@@ -26,10 +26,14 @@ class Profile(models.Model):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        
+        try:
+            img = Image.open(self.profileImage.path)
 
-        img = Image.open(self.profileImage.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.profileImage.path)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.profileImage.path)
+        except ValueError:
+            self.profileImage = 'default.jpg'
+            super().save(*args, **kwargs)
