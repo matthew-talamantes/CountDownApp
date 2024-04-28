@@ -1,5 +1,8 @@
 from django import forms
+from django.forms import ModelForm
 from allauth.account.forms import LoginForm, SignupForm
+
+from .models import Profile
 
 class CustomLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
@@ -15,3 +18,8 @@ class CustomSignupForm(SignupForm):
         self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'grow', 'placeholder': 'Password'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'grow', 'placeholder': 'Confirm Password'})
     
+class ProfileUpdateForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profileImage']
+        

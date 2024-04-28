@@ -9,6 +9,7 @@ from allauth.account.utils import send_email_confirmation
 
 from .models import MyUser, Profile
 from .serializers import MyUserSerializer, ProfileSerializer
+from .forms import ProfileUpdateForm
 
 # Create your views here.
 class CustomRegistration(RegisterView):
@@ -51,7 +52,7 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
 class UserProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Profile
     template_name = 'myuser/profile_update.html'
-    fields = ['profileImage']
+    form_class = ProfileUpdateForm
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)

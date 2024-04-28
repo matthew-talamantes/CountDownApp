@@ -13,11 +13,18 @@
     {% for field in form %}
     <div class="">
         {{ field.errors }}
+        {% if field.field.widget.input_type == 'file' %}
+        <label class="font-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="{% if field.errors %}border rounded border-error{% endif %}">
+            {{ field }}
+        </div>
+        {% else %}
         <label class="input input-bordered flex items-center gap-2{% if field.errors %} input-error{% endif %}"
             for="{{ field.id_for_label}}">
             <span class="font-semibold">{{ field.label }}</span>
             {{ field }}
         </label>
+        {% endif %}
         {% if field.help_text %}
         <small>{{ field.help_text }}</small>
         {% endif %}
