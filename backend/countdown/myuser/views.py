@@ -60,3 +60,12 @@ class UserProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
     def test_func(self):
         profile = self.get_object()
         return self.request.user == profile.user  
+    
+class PubicProfileDetailView(DetailView):
+    model = Profile
+    template_name = 'myuser/public_profile.html'
+    context_object_name = 'profile'
+    
+    def get_object(self):
+        return Profile.objects.get(user__uuid=self.kwargs['uuid'])
+    

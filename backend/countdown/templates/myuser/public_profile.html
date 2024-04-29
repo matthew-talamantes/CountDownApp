@@ -1,0 +1,17 @@
+{% extends 'counts/base.html' %}
+{% block content %}
+<section class="container mx-auto max-w-[800px]">
+    <div class="flex flex-row justify-between items-start my-6">
+        <div class="">
+            <h1 class="text-5xl">{{ profile.user.username }}'s Profile</h1>
+        </div>
+        <div class="avatar">
+            <div class="w-[13rem] rounded-xl">
+                <img class="" src="{{ profile.profileImage.url }}" alt="Profile Picture">
+            </div>
+        </div>
+    </div>
+
+
+</section>
+{% endblock content %}

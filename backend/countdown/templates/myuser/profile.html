@@ -2,7 +2,7 @@
 {% block content %}
 <section class="container mx-auto max-w-[800px]">
     <div class="flex flex-row justify-end gap-2">
-        <a class="btn btn-ghost">View Public Profile</a>
+        <a class="btn btn-ghost" href="{% url 'public-profile' user.uuid %}">View Public Profile</a>
         <a class="btn btn-primary" href="{% url 'profile-update' %}">Edit Profile</a>
     </div>
     <div class="flex flex-row justify-between items-start my-6">
