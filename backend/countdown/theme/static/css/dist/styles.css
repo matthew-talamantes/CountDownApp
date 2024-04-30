@@ -2391,6 +2391,17 @@ textarea {
   padding: 1rem;
 }
 
+.field-error .input {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-er,oklch(var(--er)/var(--tw-border-opacity)));
+}
+
+.field-error .input:focus,.field-error .input:focus-within {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-er,oklch(var(--er)/var(--tw-border-opacity)));
+  outline-color: var(--fallback-er,oklch(var(--er)/1));
+}
+
 .static {
   position: static;
 }

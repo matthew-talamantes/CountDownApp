@@ -11,7 +11,7 @@
     {% endfor %}
     {% endif %}
     {% for field in form %}
-    <div class="">
+    <div class="{% if field.errors %}field-error{% endif %}">
         {{ field.errors }}
         {% with widget=field.widget_type %}
         {% if widget == 'file' %}
@@ -21,8 +21,8 @@
                 {{ field }}
             </div>
         </div>
-        {% elif widget == 'text' %}
-        <label class="input input-bordered flex items-center gap-2{% if field.errors %} input-error{% endif %}"
+        {% elif widget == 'text' or widget == 'password' %}
+        <label class="input input-bordered flex items-center gap-2"
             for="{{ field.id_for_label}}">
             <span class="font-semibold">{{ field.label }}</span>
             {{ field }}
