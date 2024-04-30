@@ -8,6 +8,9 @@ from myuser.models import MyUser
 def get_deleted_user_instance():
     return MyUser.objects.get_or_create(username='deleted')[0]
 
+def get_anonymous_user_instance():
+    return MyUser.objects.get_or_create(username='anonymous')[0]
+
 class Countdown(models.Model):
     title = models.CharField(max_length=100, default='Countdown', blank=True)
     dateTime = models.DateTimeField()

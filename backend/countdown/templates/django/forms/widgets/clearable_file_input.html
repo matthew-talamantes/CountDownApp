@@ -1,3 +1,5 @@
+{% extends 'counts/widget_attrs.html' %}
+{% block pre_input %}
 <div class="label">
     {% if widget.is_initial %}
     <span class="label-text">{{ widget.input_text }}:</span>
@@ -6,10 +8,14 @@
     </span>
     {% endif %}
 </div>
-<input type="{{ widget.type }}" name="{{ widget.name }}" {% if 'class' not in widget.attrs %}
-    class="file-input w-full file-input-bordered" {% endif %} {% for name, value in widget.attrs.items %} {% if name == 'class' %}
-    class="file-input w-full file-input-bordered {{ value|stringformat:'s'}}" {% else %} {% if value is not False %} {{ name }}
-    {% if value is not True %}="{{ value|stringformat:'s' }}" {% endif %}{% endif %}{% endif %}{% endfor %}>
+{% endblock pre_input %}
+{% block input_data %}
+type="{{ widget.type }}" name="{{ widget.name }}"
+{% endblock input_data %}
+{% block input_class %}
+file-input w-full file-input-bordered
+{% endblock input_class %}
+{% block post_input %}
 <div class="label">
     <span class="label-text flex flex-row justify-start items-center gap-2">{% if not widget.required %}
     <input class="checkbox checkbox-primary" type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" {% if widget.attrs.disabled %}
@@ -17,3 +23,4 @@
     <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
     {% endif %}</span>
 </div>
+{% endblock post_input %}
