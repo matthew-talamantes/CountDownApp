@@ -17,7 +17,7 @@ class Countdown(models.Model):
     created_by = models.ForeignKey(MyUser, on_delete=models.SET(get_deleted_user_instance), related_name='countdowns')
     updated_by = models.ForeignKey(MyUser, on_delete=models.SET(get_deleted_user_instance), related_name='updated_countdowns', blank=True, null=True)
     public_link = models.BooleanField(default=False)
-    shared_with = models.ManyToManyField(MyUser, related_name='shared_countdowns', blank=True, null=True)
+    shared_with = models.ManyToManyField(MyUser, related_name='shared_countdowns', blank=True)
 
     def __str__(self):
         return self.title
