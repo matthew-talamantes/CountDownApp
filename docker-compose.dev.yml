@@ -4,13 +4,13 @@ networks:
   countdownnetwork:
     ipam:
       config:
-        - subnet: 172.150.0.0/16
-          ip_range: 172.150.199.0/24
+        - subnet: 172.151.0.0/16
+          ip_range: 172.151.199.0/24
 
 services:
   new-backend:
     build: ./backend
-    command: python manage.py runserver 172.150.199.2:8000
+    command: python manage.py runserver 172.151.199.2:8000
     volumes:
       - ./backend/countdown:/usr/src/app/countdown
     ports:
@@ -18,7 +18,7 @@ services:
       - "3030:3030"
     networks:
       countdownnetwork:
-        ipv4_address: 172.150.199.2
+        ipv4_address: 172.151.199.2
 
   frontend:
     container_name: frontend
@@ -37,7 +37,7 @@ services:
       - "3000:3000"
     networks:
       countdownnetwork:
-        ipv4_address: 172.150.199.4
+        ipv4_address: 172.151.199.4
 
   nginx:
     build: ./nginx
@@ -48,5 +48,5 @@ services:
       - ./nginx/html:/usr/share/nginx/html
     networks:
       countdownnetwork:
-        ipv4_address: 172.150.199.1
+        ipv4_address: 172.151.199.1
   
