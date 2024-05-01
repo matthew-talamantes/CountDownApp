@@ -8,7 +8,7 @@ networks:
           ip_range: 172.151.199.0/24
 
 services:
-  new-backend:
+  countdown-backend:
     build: ./backend
     command: python manage.py runserver 172.151.199.2:8000
     volumes:
@@ -20,8 +20,8 @@ services:
       countdownnetwork:
         ipv4_address: 172.151.199.2
 
-  frontend:
-    container_name: frontend
+  countdown-frontend:
+    container_name: countdown-frontend
     build:
       context: ./frontend
       dockerfile: dev.Dockerfile
