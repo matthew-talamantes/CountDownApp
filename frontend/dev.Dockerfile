@@ -10,7 +10,7 @@ COPY public ./public
 COPY next.config.mjs .
 COPY tsconfig.json .
 COPY tailwind.config.ts .
-COPY postcss.config.js .
+COPY postcss.config.mjs .
 COPY .env.local .
 
 ENV NEXT_TELEMETRY_DISABLED 1
