@@ -1,10 +1,9 @@
-{% extends 'counts/widget_attrs.html' %}
+{% extends 'counts/file_widget_attrs.html' %}
 {% block pre_input %}
 <div class="label">
     {% if widget.is_initial %}
     <span class="label-text">{{ widget.input_text }}:</span>
-    <span class="label-text-alt">{{ widget.initial_text }}: <a
-        href="{{ widget.value.url }}">{{ widget.value }}</a>
+    <span class="label-text-alt">{{ widget.initial_text }}: <a href="{{ widget.value.url }}">{{ widget.value }}</a>
     </span>
     {% endif %}
 </div>
@@ -18,9 +17,10 @@ file-input w-full file-input-bordered
 {% block post_input %}
 <div class="label">
     <span class="label-text flex flex-row justify-start items-center gap-2">{% if not widget.required %}
-    <input class="checkbox checkbox-primary" type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" {% if widget.attrs.disabled %}
-        disabled{% endif %}{% if widget.attrs.checked %} checked{% endif %}>
-    <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
-    {% endif %}</span>
+        <input class="checkbox checkbox-primary" type="checkbox" name="{{ widget.checkbox_name }}"
+            id="{{ widget.checkbox_id }}" {% if widget.attrs.disabled %} disabled{% endif %}{% if widget.attrs.checked
+            %} checked{% endif %}>
+        <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
+        {% endif %}</span>
 </div>
 {% endblock post_input %}

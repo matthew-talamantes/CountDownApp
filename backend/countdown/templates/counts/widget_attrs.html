@@ -1,8 +1,5 @@
-{% block pre_input %}{% endblock pre_input %}
-<input {% block input_data %}{% endblock input_data %}
-class="{% block input_class %}{% endblock input_class %} {{ widget.attrs.class|stringformat:'s' }}"
-
-{% for name, value in widget.attrs.items %} {% if name != 'class' %}
+{% for name, value in widget.attrs.items %}
+{% if name != 'class' %}
 {% if value is not False %} {{ name }}
-{% if value is not True %}="{{ value|stringformat:'s' }}" {% endif %}{% endif %}{% endif %}{% endfor %}>
-{% block post_input %}{% endblock post_input %}
+{% if value is not True %}="{{ value|stringformat:'s' }}" {% endif %}{% endif %}{% endif %}
+{% endfor %}

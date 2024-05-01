@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
 
 from .models import Countdown, get_anonymous_user_instance
+from .forms import CountdownForm
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -15,7 +16,7 @@ class HomeView(TemplateView):
 class CountdownCreateView(CreateView):
     model = Countdown
     template_name = 'counts/countdown_form.html'
-    fields = ['title', 'dateTime', 'description', 'public_link', 'shared_with']
+    form_class = CountdownForm
     
     def form_valid(self, form):
         user = self.request.user
