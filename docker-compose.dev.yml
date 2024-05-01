@@ -1,0 +1,52 @@
+version: '3'
+
+networks:
+  countdownnetwork:
+    ipam:
+      config:
+        - subnet: 172.150.0.0/16
+          ip_range: 172.150.199.0/24
+
+services:
+  new-backend:
+    build: ./backend
+    command: python manage.py runserver 172.150.199.2:8000
+    volumes:
+      - ./backend/countdown:/usr/src/app/countdown
+    ports:
+      - "8000:8000"
+      - "3030:3030"
+    networks:
+      countdownnetwork:
+        ipv4_address: 172.150.199.2
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    environment:
+      ENV_VARIABLE: ${ENV_VARIABLE}
+      NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3000:3000"
+    networks:
+      countdownnetwork:
+        ipv4_address: 172.150.199.4
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/html:/usr/share/nginx/html
+    networks:
+      countdownnetwork:
+        ipv4_address: 172.150.199.1
+  
