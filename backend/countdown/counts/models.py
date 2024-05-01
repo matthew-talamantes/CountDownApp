@@ -13,7 +13,7 @@ def get_anonymous_user_instance():
 
 class Countdown(models.Model):
     title = models.CharField(max_length=100, default='Countdown', blank=True)
-    dateTime = models.DateTimeField()
+    dateTime = models.DateTimeField(verbose_name='Date and Time')
     description = models.TextField(default='', blank=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(blank=True, null=True)
