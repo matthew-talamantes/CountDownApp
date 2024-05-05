@@ -14,8 +14,4 @@
     .checkbox-field input[type="checkbox"] {
         @apply checkbox checkbox-primary;
     }
-
-    .select-field select {
-        @apply select select-bordered;
-    }
 }
