@@ -10,6 +10,18 @@
             ],
             "django": true,
             "justMyCode": false
+        },
+        {
+            "name": "Mac Django",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/countdown/manage.py",
+            "args": [
+                "runserver",
+            ],
+            "django": true,
+            "justMyCode": false,
+            "python": "${workspaceFolder}/backend/env/bin/python"
         }
     ]
 }
