@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
 
 from .models import Countdown, get_anonymous_user_instance
@@ -37,3 +38,12 @@ class CountdownCreateView(CreateView):
             else:
                 form[field].field.widget.attrs['class'] += ' error'
         return super().form_invalid(form)
+    
+class CountdownDetailView(UserPassesTestMixin, DetailView):
+    model = Countdown
+    template_name = 'counts/countdown_detail.html'
+    context_object_name = 'countdown'
+    
+    def test_func(self):
+        countdown = self.get_object()
+        return self.request.user == countdown.created_by or countdown.is_public or self.request.user in countdown.shared_with.all()
