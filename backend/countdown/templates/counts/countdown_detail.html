@@ -1,0 +1,44 @@
+{% extends 'counts/base.html' %}
+{% load static %}
+{% block extra_head %}
+<script src="{% static 'js/countdown.js' %}"></script>
+{% endblock extra_head %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ countdown.title }}</h1>
+                <p>{{ countdown.description }}</p>
+                <article x-data="countdownWrapper" x-init="$watch('dateValue', value => setDateObj())">
+                    <p class="hidden" x-init="dateValue = $el.innerHTML">{{ countdown.dateTime|date:"c" }}</p>
+                    <template x-if="sign == '-'">
+                        <p x-text="sign"></p>
+                    </template>
+                    <div>
+                        <p x-text="days"></p>
+                        <p>Days</p>
+                    </div>
+                    <div>
+                        <p x-text="hours"></p>
+                        <p>Hours</p>
+                    </div>
+                    <div>
+                        <p x-text="minutes"></p>
+                        <p>Minutes</p>
+                    </div>
+                    <div>
+                        <p x-text="seconds"></p>
+                        <p>Seconds</p>
+                    </div>
+                </article>
+                <p>{{ countdown.timezone }}</p>
+                <p>{{ countdown.created_at }}</p>
+                <p>{{ countdown.updated_at }}</p>
+                <a class="btn btn-primary">Update</a>
+                <a class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
