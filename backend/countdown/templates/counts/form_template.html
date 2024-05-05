@@ -42,6 +42,20 @@
                 {{ field }}
             </div>
         </label>
+        {% elif widget == 'checkbox' %}
+        <div class="form-control checkbox-field">
+            <label class="label cursor-pointer" for="{{ field.id_for_label }}">
+                <span class="font-semibold">{{ field.label }}</span>
+                {{ field }}
+            </label>
+        </div>
+        {% elif widget == 'selectmultiple' or widget == 'select' %}
+        <label class="form-control select-field" for="{{ field.id_for_label }}">
+            <div class="label">
+                <span class="font-semibold">{{ field.label }}</span>
+            </div>
+            {{ field }}
+        </label>
         {% else %}
         <label class="flex items-center gap-2">
             <span class="font-semibold">{{ field.label }}</span>
