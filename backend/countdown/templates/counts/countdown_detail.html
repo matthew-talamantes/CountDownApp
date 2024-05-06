@@ -10,8 +10,9 @@
             <div class="col-md-12">
                 <h1>{{ countdown.title }}</h1>
                 <p>{{ countdown.description }}</p>
+                <p>{{ countdown.dateTime|date:"F d, Y g:i:sa" }} {{ countdown.timeZone }}</p>
                 <article x-data="countdownWrapper" x-init="$watch('dateValue', value => setDateObj())">
-                    <p class="hidden" x-init="dateValue = $el.innerHTML">{{ countdown.dateTime|date:"c" }}</p>
+                    <p class="hidden" x-init="dateValue = $el.innerHTML">{{ localizedDateTime }}</p>
                     <template x-if="sign == '-'">
                         <p x-text="sign"></p>
                     </template>

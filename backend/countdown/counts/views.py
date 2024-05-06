@@ -2,6 +2,11 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
 
+from pytz import timezone
+import pytz
+
+from datetime import datetime
+
 from .models import Countdown, get_anonymous_user_instance
 from .forms import CountdownForm
 
@@ -24,10 +29,9 @@ class CountdownCreateView(CreateView):
         if user.is_anonymous:
             user = get_anonymous_user_instance()
         form.instance.created_by = user
-        if form.cleaned_data['title'] == 'bannanas':
-            form.add_error('title', 'You cannot use that title.')
-            return self.form_invalid(form)
-
+        if form.instance.title == 'bananas':
+            form.add_error('title', 'You cannot use the word "bananas" in the title.')
+            return super().form_invalid(form)
         return super().form_valid(form)
     
     def form_invalid(self, form):
@@ -43,6 +47,15 @@ class CountdownDetailView(UserPassesTestMixin, DetailView):
     model = Countdown
     template_name = 'counts/countdown_detail.html'
     context_object_name = 'countdown'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        countdown = context['countdown']
+        countTimezone = timezone(countdown.timeZone)
+        rawDateTime = datetime(countdown.dateTime.year, countdown.dateTime.month, countdown.dateTime.day, countdown.dateTime.hour, countdown.dateTime.minute, countdown.dateTime.second, countdown.dateTime.microsecond)
+        localizedDateTime = countTimezone.localize(rawDateTime)
+        context['localizedDateTime'] = localizedDateTime.isoformat()
+        return context
     
     def test_func(self):
         countdown = self.get_object()
