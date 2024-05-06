@@ -12,8 +12,8 @@ export default function FavoriteCountCard({ countDown: { title, dateTime, timeZo
 
     return (
         <article className="flex flex-col justify-start items-center gap-2">
-            <div className="flex flex-col justify-start items-start gap-1 w-full">
-                <h3 className="text-[1.69rem] font-normal text-base-content">{title}</h3>
+            <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-1 w-full">
+                <h3 className="text-[1.5rem] font-normal text-base-content">{title}</h3>
                 <h4 className="text-base font-medium text-base-content">{date.toLocaleString('en-US', { hour12: true, timeZone: timeZone, hour: 'numeric', minute: 'numeric', month: 'short', day: 'numeric', year: 'numeric', timeZoneName: 'short' })}</h4>
             </div>
             <div className="flex flex-row justify-center items-center gap-1">
