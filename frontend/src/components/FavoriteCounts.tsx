@@ -94,7 +94,7 @@ export default function FavoriteCounts() {
 
 
     return (
-        <div>
+        <div className="container mx-auto my-8 min-h-[37.5rem] flex flex-col justify-center items-center gap-6">
             <section id="favorite-count">
                 <FocusCountdown countDown={favoriteCount} />
             </section>
