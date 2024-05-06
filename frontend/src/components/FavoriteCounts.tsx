@@ -1,11 +1,13 @@
 import FocusCountdown from "@/components/FocusCountdown";
+import FavoriteCountCard from "@/components/FavoriteCountCard";
 
 
 export default function FavoriteCounts() {
 
     const favoriteCount = {
         title: "Family Beach Trip",
-        dateTime: "2024-06-21T08:00:00.00-04:00",
+        dateTime: "2024-06-21T00:00:00.00-04:00",
+        timeZone: "US/Eastern",
         description: "Beach trip with the family.",
         created_at: "2024-06-21T13:12:24.604664-04:00",
         created_by: "user1",
@@ -15,22 +17,91 @@ export default function FavoriteCounts() {
         shared_with: [],
     };
 
+    const favoriteCounts = [
+        {
+            title: "Family Beach Trip",
+            dateTime: "2024-06-21T00:00:00.00-04:00",
+            timeZone: "US/Eastern",
+            description: "Beach trip with the family.",
+            created_at: "2024-06-21T13:12:24.604664-04:00",
+            created_by: "user1",
+            updated_at: null,
+            updated_by: null,
+            public_link: false,
+            shared_with: [],
+        },
+        {
+            title: "Family Beach Trip",
+            dateTime: "2024-06-21T00:00:00.00-04:00",
+            timeZone: "US/Eastern",
+            description: "Beach trip with the family.",
+            created_at: "2024-06-21T13:12:24.604664-04:00",
+            created_by: "user1",
+            updated_at: null,
+            updated_by: null,
+            public_link: false,
+            shared_with: [],
+        },
+        {
+            title: "Family Beach Trip",
+            dateTime: "2024-06-21T00:00:00.00-04:00",
+            timeZone: "US/Eastern",
+            description: "Beach trip with the family.",
+            created_at: "2024-06-21T13:12:24.604664-04:00",
+            created_by: "user1",
+            updated_at: null,
+            updated_by: null,
+            public_link: false,
+            shared_with: [],
+        },
+        {
+            title: "Family Beach Trip",
+            dateTime: "2024-06-21T00:00:00.00-04:00",
+            timeZone: "US/Eastern",
+            description: "Beach trip with the family.",
+            created_at: "2024-06-21T13:12:24.604664-04:00",
+            created_by: "user1",
+            updated_at: null,
+            updated_by: null,
+            public_link: false,
+            shared_with: [],
+        },
+        {
+            title: "Family Beach Trip",
+            dateTime: "2024-06-21T00:00:00.00-04:00",
+            timeZone: "US/Eastern",
+            description: "Beach trip with the family.",
+            created_at: "2024-06-21T13:12:24.604664-04:00",
+            created_by: "user1",
+            updated_at: null,
+            updated_by: null,
+            public_link: false,
+            shared_with: [],
+        },
+        {
+            title: "Family Beach Trip",
+            dateTime: "2024-06-21T00:00:00.00-04:00",
+            timeZone: "US/Eastern",
+            description: "Beach trip with the family.",
+            created_at: "2024-06-21T13:12:24.604664-04:00",
+            created_by: "user1",
+            updated_at: null,
+            updated_by: null,
+            public_link: false,
+            shared_with: [],
+        },
+    ];
+
 
     return (
         <div>
             <section id="favorite-count">
-                <FocusCountdown title={favoriteCount.title} dateTime={favoriteCount.dateTime} />
+                <FocusCountdown countDown={favoriteCount} />
             </section>
-            <section id="favorite-counts">
-                <article>
-                    <div>
-                        <h3>New Years Eve</h3>
-                        <h5>12:00AM Jan. 1, 2025</h5>
-                    </div>
-                    <div>
-                        <h3>340 Days 12 Hours 10 Minutes 30 Seconds</h3>
-                    </div>
-                </article>
+            <section id="favorite-counts" className="flex flex-col md:flex-row md:flex-wrap justify-start md:justify-around items-center gap-4">
+                {favoriteCounts.map((countDown, index) => {
+                    return <FavoriteCountCard key={index} countDown={countDown} />;
+                })}
             </section>
         </div>
     );
