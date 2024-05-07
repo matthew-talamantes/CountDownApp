@@ -7,8 +7,12 @@ import useCountdown from '@/utils/useCountdown';
 
 export default function FocusCountdown({ countDown: { title, dateTime, timeZone } }) {
     const date = new Date(Date.parse(dateTime));
-    const [time, setTime] = React.useState(getTwelveHourTime(date));
+    const [time, setTime] = React.useState();
     const { sign, daysLeft, hoursLeft, minutesLeft, secondsLeft } = useCountdown(date);
+
+    React.useEffect(() => {
+        setTime(getTwelveHourTime(date));
+    }, []);
     // console.log(sign);
     return (
         <article className="container max-w-[48.5rem] mx-auto bg-base-300 rounded p-6">
