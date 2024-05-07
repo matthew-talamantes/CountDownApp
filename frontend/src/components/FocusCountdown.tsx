@@ -10,7 +10,7 @@ export default function FocusCountdown({ countDown: { title, dateTime, timeZone 
     const { sign, daysLeft, hoursLeft, minutesLeft, secondsLeft } = useCountdown(date);
     // console.log(sign);
     return (
-        <article className="container max-w-[48.5rem] mx-auto">
+        <article className="container max-w-[48.5rem] mx-auto bg-base-300 rounded p-6">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                 <h3 className="text-3xl font-semibold text-base-content">{title}</h3>
                 <h4 className="text-2xl font-normal text-base-content">{getTwelveHourTime(date)} {MONTHS[date.getMonth()]} {date.getDate()}, {date.getFullYear()} {timeZone}</h4>
