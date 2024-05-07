@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function Navbar() {
 
@@ -7,7 +8,7 @@ export default function Navbar() {
             <li><a>Item 1</a></li>
             <li><a>Item 2</a></li>
             <li><a>Item 3</a></li>
-            <li><a className="btn btn-primary">My Account</a></li>
+            <li><Link href="/account/signin" className="btn btn-primary">Login</Link></li>
         </ul>
     );
 
