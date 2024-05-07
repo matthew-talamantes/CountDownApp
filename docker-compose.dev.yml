@@ -49,4 +49,3 @@ services:
     networks:
       countdownnetwork:
         ipv4_address: 172.151.199.1
-  

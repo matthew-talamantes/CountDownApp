@@ -1,3 +1,5 @@
+"use client";
+
 const getTwelveHourTime = (date: Date) => {
     const hours = date.getHours();
     const minutes = date.getMinutes();
