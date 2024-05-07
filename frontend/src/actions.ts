@@ -4,6 +4,7 @@ import { sessionOptions, SessionData, defaultSession } from "@/lib";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { addServerMessage } from "./utils/serverMessageUtils";
 
 
 export const getSession = async () => {
@@ -28,7 +29,7 @@ export const login = async (prevState: any, formData: FormData) => {
     const session = await getSession();
     const username = formData.get("username") as string;
     const password1 = formData.get("password1") as string;
-    const url = `${process.env.BACKEND_URL}/rest-auth/login/`;
+    const url = `${process.env.BACKEND_URL}/api-auth/login/`;
     const data = {
         'username': username,
         'password': password1,
@@ -48,6 +49,8 @@ export const login = async (prevState: any, formData: FormData) => {
         await session.save().then(() => {
             // MARK: Todo
             // Todo: Add success message and redirect
+            addServerMessage({ message: "You are now signed in.", type: 'success' });
+            redirect("/");
         });
         // Todo: Add success message
 

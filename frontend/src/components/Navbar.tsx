@@ -1,21 +1,36 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 
+import { defaultSession } from "@/lib";
+import { getClientSession } from "@/actions";
+
 export default function Navbar() {
+
+    const [session, setSession] = React.useState(defaultSession);
+
+    React.useEffect(() => {
+        const checkSession = async () => {
+            const session = await getClientSession();
+            setSession(session);
+        };
+        checkSession();
+    }, []);
 
     const menu = (
         <ul id="main-nav" className="menu menu-lg menu-vertical lg:menu-horizontal">
             <li><a>Item 1</a></li>
             <li><a>Item 2</a></li>
             <li><a>Item 3</a></li>
-            <li><Link href="/account/signin" className="btn btn-primary">Login</Link></li>
+            <li>{session.isAuthenticated ? <a className="btn btn-primary">My Account</a> : <Link href="/account/signin" className="btn btn-primary">Login</Link>}</li>
         </ul>
     );
 
     return (
         <header className="navbar bg-base-300 px-4 py-2">
             <div className="navbar-start">
-                <h1 className="text-2xl lg:text-4xl font-bold text-primary-500">CountdownApp</h1>
+                <h1 className="text-2xl lg:text-4xl font-bold text-primary-500"><Link href="/">CountdownApp</Link></h1>
             </div>
             <div className="navbar-end">
                 <div className="dropdown dropdown-end">
