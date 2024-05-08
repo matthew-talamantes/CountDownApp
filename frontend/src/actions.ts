@@ -64,6 +64,7 @@ export const logout = async () => {
     session.destroy();
     // MARK: Todo
     // Todo: Add success message
+    addServerMessage({ message: "You are now signed out.", type: 'success' });
     redirect("/");
 };
 
