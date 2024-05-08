@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
+from django.utils import timezone as djTimezone
 
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 
 from pytz import timezone
@@ -28,6 +29,24 @@ class APICountdownCreateView(CreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = CountdownSerializer
     queryset = Countdown.objects.all()
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        if user.is_anonymous:
+            user = get_anonymous_user_instance()
+            serializer.save(created_by=user, public_link=True, shared_with=[])
+        else:
+            serializer.save(created_by=user)
+
+class APICountdownReadUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [CountdownPermissions]
+    serializer_class = CountdownSerializer
+    queryset = Countdown.objects.all()
+
+    def perform_update(self, serializer):
+        user = self.request.user
+        serializer.save(updated_by=user, updated_at=djTimezone.now())
+        
     
 class CountdownCreateView(CreateView):
     model = Countdown
