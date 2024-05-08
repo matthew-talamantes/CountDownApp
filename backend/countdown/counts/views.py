@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
 
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny
+
 from pytz import timezone
 import pytz
 
@@ -9,6 +12,8 @@ from datetime import datetime
 
 from .models import Countdown, get_anonymous_user_instance
 from .forms import CountdownForm
+from .permissions import CountdownPermissions
+from .serializers import CountdownSerializer
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -18,6 +23,11 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
         return context
+    
+class APICountdownCreateView(CreateAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = CountdownSerializer
+    queryset = Countdown.objects.all()
     
 class CountdownCreateView(CreateView):
     model = Countdown
