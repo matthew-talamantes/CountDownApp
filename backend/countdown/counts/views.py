@@ -3,8 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
 from django.utils import timezone as djTimezone
 
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from pytz import timezone
 import pytz
@@ -46,8 +46,21 @@ class APICountdownReadUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         user = self.request.user
         serializer.save(updated_by=user, updated_at=djTimezone.now())
-        
+
+class APICountdownListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CountdownSerializer
     
+    def get_queryset(self):
+        user = self.request.user
+        options = self.request.query_params
+        sharedWith = options.get('sharedWith', None)
+        if sharedWith.lower() == 'true':
+            results = user.shared_countdowns.all()
+        else:
+            results = Countdown.objects.filter(created_by=user)
+        return results
+        
 class CountdownCreateView(CreateView):
     model = Countdown
     template_name = 'counts/countdown_form.html'
