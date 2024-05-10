@@ -1,15 +1,13 @@
 from django.core.validators import validate_email, ValidationError
-from django.http import JsonResponse
-from django.views.generic import (DetailView, UpdateView)
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse3
 
 from dj_rest_auth.registration.views import RegisterView
 from allauth.account import signals
 from allauth.account.utils import send_email_confirmation
 
-from .models import MyUser, Profile
-from .serializers import MyUserSerializer, ProfileSerializer
-from .forms import ProfileUpdateForm
+from .models import MyUser
+from .serializers import MyUserSerializer
+
 
 # Create your views here.
 class CustomRegistration(RegisterView):
@@ -36,36 +34,4 @@ class CustomRegistration(RegisterView):
         send_email_confirmation(self.request._request, user)
         return user
     
-class UserProfileDetailView(LoginRequiredMixin, DetailView):
-    model = Profile
-    template_name = 'myuser/profile.html'
-    context_object_name = 'profile'
-    
-    def get_object(self):
-        return Profile.objects.get(user=self.request.user)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
-        return context
-    
-class UserProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Profile
-    template_name = 'myuser/profile_update.html'
-    form_class = ProfileUpdateForm
-
-    def get_object(self):
-        return Profile.objects.get(user=self.request.user)
-
-    def test_func(self):
-        profile = self.get_object()
-        return self.request.user == profile.user  
-    
-class PubicProfileDetailView(DetailView):
-    model = Profile
-    template_name = 'myuser/public_profile.html'
-    context_object_name = 'profile'
-    
-    def get_object(self):
-        return Profile.objects.get(user__uuid=self.kwargs['uuid'])
     
