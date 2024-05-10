@@ -12,7 +12,7 @@ import pytz
 from datetime import datetime
 
 from .models import Countdown, get_anonymous_user_instance
-from .forms import CountdownForm
+
 from .permissions import CountdownPermissions
 from .serializers import CountdownSerializer
 
@@ -64,7 +64,6 @@ class APICountdownListView(ListAPIView):
 class CountdownCreateView(CreateView):
     model = Countdown
     template_name = 'counts/countdown_form.html'
-    form_class = CountdownForm
     
     def form_valid(self, form):
         user = self.request.user
