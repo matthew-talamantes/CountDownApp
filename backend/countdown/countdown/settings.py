@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'myuser.apps.MyuserConfig',
     'counts.apps.CountsConfig',
     'theme.apps.ThemeConfig',
+    'userprofile.apps.UserprofileConfig',
 
     # Dev browser reload
     'django_browser_reload',
