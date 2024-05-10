@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from dj_rest_auth.registration.views import RegisterView
 from allauth.account import signals
 from allauth.account.utils import send_email_confirmation
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import AllowAny
 
 from .models import MyUser
 from .serializers import MyUserSerializer
@@ -33,5 +35,12 @@ class CustomRegistration(RegisterView):
         self.access_token, self.refresh_token = ('none', 'none')
         send_email_confirmation(self.request._request, user)
         return user
+    
+class APIMyUserRevrieveView(RetrieveAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = MyUserSerializer
+    queryset = MyUser.objects.all()
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
     
     
