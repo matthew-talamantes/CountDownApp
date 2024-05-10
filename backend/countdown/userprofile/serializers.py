@@ -14,3 +14,11 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('user', 'profileImage', 'friends', 'favoriteCountdown', 'followingCountdowns')
+
+class PublicProfileSerializer(serializers.ModelSerializer):
+    user = MyUserSerializer()
+    
+    class Meta:
+        model = Profile
+        fields = ('user', 'profileImage')
+        read_only_fields = ('user', 'profileImage')
