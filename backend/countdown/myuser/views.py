@@ -1,5 +1,5 @@
 from django.core.validators import validate_email, ValidationError
-from django.http import JsonResponse3
+from django.http import JsonResponse
 
 from dj_rest_auth.registration.views import RegisterView
 from allauth.account import signals
