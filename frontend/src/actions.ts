@@ -47,12 +47,9 @@ export const login = async (prevState: any, formData: FormData) => {
         session.userName = json.user.username;
 
         await session.save().then(() => {
-            // MARK: Todo
-            // Todo: Add success message and redirect
             addServerMessage({ message: "You are now signed in.", type: 'success' });
             redirect("/");
         });
-        // Todo: Add success message
 
     } else {
         const errors = await res.json();
@@ -62,8 +59,6 @@ export const login = async (prevState: any, formData: FormData) => {
 export const logout = async () => {
     const session = await getSession();
     session.destroy();
-    // MARK: Todo
-    // Todo: Add success message
     addServerMessage({ message: "You are now signed out.", type: 'success' });
     redirect("/");
 };
