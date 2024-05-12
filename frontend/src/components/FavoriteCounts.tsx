@@ -1,21 +1,23 @@
+'use client';
+import { cookies } from "next/headers";
+import { getUserProfile, getCountdown } from "@/actions";
+
 import FocusCountdown from "@/components/FocusCountdown";
 import FavoriteCountCard from "@/components/FavoriteCountCard";
 
 
 export default function FavoriteCounts() {
 
-    const favoriteCount = {
-        title: "Family Beach Trip",
-        dateTime: "2024-06-21T00:00:00.00-04:00",
-        timeZone: "US/Eastern",
-        description: "Beach trip with the family.",
-        created_at: "2024-06-21T13:12:24.604664-04:00",
-        created_by: "user1",
-        updated_at: null,
-        updated_by: null,
-        public_link: false,
-        shared_with: [],
+    const getFavoriteCount = async () => {
+        const profileRes = await fetch('/api/getUserProfile/');
+        const profile = await profileRes.json();
+        const favoriteCountRes = await getCountdown(profile.favoriteCountdown);
+        const favoriteCount = await favoriteCountRes;
+        // console.log('Favorite Count: ', favoriteCount);
+        return favoriteCount;
     };
+
+    const favoriteCount = getFavoriteCount();
 
     const favoriteCounts = [
         {
