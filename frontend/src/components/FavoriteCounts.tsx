@@ -9,6 +9,7 @@ export default function FavoriteCounts() {
 
     const [favoriteCount, setFavoriteCount] = React.useState({});
     const [profile, setProfile] = React.useState(null);
+    const [followingCounts, setFollowingCounts] = React.useState([]);
 
     const getFavoriteCount = async () => {
         const favoriteCountRes = await fetch(`/api/countdown/${profile.favoriteCountdown}`);
