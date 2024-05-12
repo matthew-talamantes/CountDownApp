@@ -1,7 +1,10 @@
+from urllib.parse import unquote
+
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView, CreateView, UpdateView, DeleteView, DetailView, ListView)
 from django.utils import timezone as djTimezone
+from django.db.models import Q
 
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -54,8 +57,15 @@ class APICountdownListView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
         options = self.request.query_params
-        sharedWith = options.get('sharedWith', None)
-        if sharedWith.lower() == 'true':
+        sharedWith = options.get('sharedWith', 'false')
+        countList = options.get('countList', 'false')
+        if countList != 'false':
+            countList = unquote(countList)
+            countList = countList.strip('[').strip(']')
+            countList = countList.split(',')
+            countList = [int(count.strip()) for count in countList]
+            results = Countdown.objects.filter(Q(id__in=countList) & (Q(created_by=user) | Q(shared_with=user) | Q(public_link=True)))
+        elif sharedWith.lower() == 'true':
             results = user.shared_countdowns.all()
         else:
             results = Countdown.objects.filter(created_by=user)
