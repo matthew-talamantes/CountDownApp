@@ -141,3 +141,21 @@ export const getCountdown = async (countdownId: string) => {
     const data = await response.json();
     return data;
 };
+
+export const getCountdownList = async (sharedWith = false, countList = []) => {
+    const session = await getSession();
+    let url = `${process.env.BACKEND_URL}/counts/list/`;
+    if (countList.length > 0) {
+        url = `${url}?countList=${countList}`;
+    } else if (sharedWith) {
+        url = `${url}?sharedWith=true`;
+    }
+    const headers = getCredentialedHeaders(session);
+    const response = await fetch(url, { headers: headers, cache: 'no-store' });
+    if (!response.ok) {
+        console.log('Countdown Error: ', response);
+    } else {
+        const data = await response.json();
+        return data;
+    }
+};
