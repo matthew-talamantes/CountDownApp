@@ -8,22 +8,34 @@ import FavoriteCountCard from "@/components/FavoriteCountCard";
 export default function FavoriteCounts() {
 
     const [favoriteCount, setFavoriteCount] = React.useState({});
+    const [profile, setProfile] = React.useState(null);
 
     const getFavoriteCount = async () => {
-        const profileRes = await fetch('/api/getUserProfile/');
-        const profile = await profileRes.json();
         const favoriteCountRes = await fetch(`/api/countdown/${profile.favoriteCountdown}`);
         const favoriteCount = await favoriteCountRes.json();
         return favoriteCount;
     };
 
     React.useEffect(() => {
-        const obtainFavoriteCount = async () => {
-            const count = await getFavoriteCount();
-            setFavoriteCount(count);
+        const obtainProfile = async () => {
+            const profile = await fetch('/api/getUserProfile/');
+            const profileData = await profile.json();
+            setProfile(profileData);
         };
-        obtainFavoriteCount();
+
+        obtainProfile();
     }, []);
+
+    React.useEffect(() => {
+        const obtainFavoriteCount = async () => {
+            if (profile !== null) {
+                const count = await getFavoriteCount();
+                setFavoriteCount(count);
+            }
+        };
+
+        obtainFavoriteCount();
+    }, [profile])
 
     const favoriteCounts = [
         {
