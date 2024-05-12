@@ -5,8 +5,8 @@ import getTwelveHourTime from '@/utils/getTwelveHourTime';
 import MONTHS from '@/utils/months';
 import useCountdown from '@/utils/useCountdown';
 
-export default function FocusCountdown({ countDown: { title, dateTime, timeZone } }) {
-    const date = new Date(Date.parse(dateTime));
+export default function FocusCountdown({ countDown: { title, localizedDateTime, timeZone } }) {
+    const date = new Date(Date.parse(localizedDateTime));
     const [time, setTime] = React.useState();
     const { sign, daysLeft, hoursLeft, minutesLeft, secondsLeft } = useCountdown(date);
 
