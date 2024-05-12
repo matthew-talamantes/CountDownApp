@@ -5,14 +5,62 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { addServerMessage } from "./utils/serverMessageUtils";
+import { count } from "console";
 
+
+const decodeJwt = (token: string) => {
+    const tokenArray = token.split('.');
+    const payload = JSON.parse(atob(tokenArray[1]));
+    return payload;
+};
+
+export const refreshAccessToken = async (token: string) => {
+    const payload = decodeJwt(token);
+    const expDate = new Date(payload.exp * 1000);
+    const now = new Date();
+    if (expDate > now) {
+        const url = `${process.env.BACKEND_URL}/api-auth/token/refresh/`;
+        const data = {
+            'refresh': token,
+        };
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        const res = await fetch(url, { cache: 'no-store', method: "POST", credentials: 'include', headers: headers, body: JSON.stringify(data) });
+        if (res.ok) {
+            const json = await res.json();
+            return json.access;
+        } else {
+            addServerMessage({ message: "Your session has expired. Please sign in again.", type: 'error' });
+            logout();
+            return null;
+        }
+    } else {
+        addServerMessage({ message: "Your session has expired. Please sign in again.", type: 'error' });
+        logout();
+    }
+};
 
 export const getSession = async () => {
     const session = await getIronSession<SessionData>(cookies(), sessionOptions);
     if (!session.isAuthenticated) {
         session.isAuthenticated = defaultSession.isAuthenticated;
     }
-    return session;
+    if (session.accessToken && session.refreshToken) {
+        const tokenArray = session.accessToken.split('.');
+        const payload = JSON.parse(atob(tokenArray[1]));
+        const expDate = new Date(payload.exp * 1000);
+        const now = new Date();
+        if (expDate.valueOf() < (now.valueOf() - 30000)) {
+            const accessToken = await refreshAccessToken(session.refreshToken);
+            session.accessToken = accessToken;
+            return session;
+        } else {
+            return session;
+        }
+    } else {
+        return session;
+    }
 };
 
 export const getClientSession = async () => {
@@ -63,23 +111,33 @@ export const logout = async () => {
     redirect("/");
 };
 
-export const refreshToken = async () => {
-    const session = await getSession();
-    const url = `${process.env.BACKEND_URL}/rest-auth/token/refresh/`;
-    const data = {
-        'refresh': session.refreshToken,
-    };
-    const headers = {
+const getCredentialedHeaders = (session: SessionData) => {
+    return {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.accessToken}`,
+        'include': 'credentials',
     };
-    const res = await fetch(url, { cache: 'no-store', method: "POST", credentials: 'include', headers: headers, body: JSON.stringify(data) });
-    if (res.ok) {
-        const json = await res.json();
-        session.accessToken = json.access;
-        await session.save();
-    } else {
-        session.destroy();
-        // MARK: Todo
-        // Todo: Add error message and redirect to signin
+};
+
+export const getUserProfile = async (session: SessionData) => {
+    const url = `${process.env.BACKEND_URL}/user/profile/${session.userId}/`;
+    const headers = getCredentialedHeaders(session);
+    const response = await fetch(url, { headers: headers, cache: 'no-store' });
+    if (!response.ok) {
+        console.log('Profile Error: Response Headers: ', response.headers);
     }
+    const data = await response.json();
+    return data;
+};
+
+export const getCountdown = async (countdownId: string) => {
+    const session = await getSession();
+    const url = `${process.env.BACKEND_URL}/counts/countdown/${countdownId}/`;
+    const headers = getCredentialedHeaders(session);
+    const response = await fetch(url, { headers: headers, cache: 'no-store' });
+    if (!response.ok) {
+        console.log('Countdown Error: ', response);
+    }
+    const data = await response.json();
+    return data;
 };
