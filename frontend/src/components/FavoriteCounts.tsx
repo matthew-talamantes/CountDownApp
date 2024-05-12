@@ -1,6 +1,5 @@
 'use client';
-import { cookies } from "next/headers";
-import { getUserProfile, getCountdown } from "@/actions";
+import React from 'react';
 
 import FocusCountdown from "@/components/FocusCountdown";
 import FavoriteCountCard from "@/components/FavoriteCountCard";
@@ -8,16 +7,23 @@ import FavoriteCountCard from "@/components/FavoriteCountCard";
 
 export default function FavoriteCounts() {
 
+    const [favoriteCount, setFavoriteCount] = React.useState({});
+
     const getFavoriteCount = async () => {
         const profileRes = await fetch('/api/getUserProfile/');
         const profile = await profileRes.json();
-        const favoriteCountRes = await getCountdown(profile.favoriteCountdown);
-        const favoriteCount = await favoriteCountRes;
-        // console.log('Favorite Count: ', favoriteCount);
+        const favoriteCountRes = await fetch(`/api/countdown/${profile.favoriteCountdown}`);
+        const favoriteCount = await favoriteCountRes.json();
         return favoriteCount;
     };
 
-    const favoriteCount = getFavoriteCount();
+    React.useEffect(() => {
+        const obtainFavoriteCount = async () => {
+            const count = await getFavoriteCount();
+            setFavoriteCount(count);
+        };
+        obtainFavoriteCount();
+    }, []);
 
     const favoriteCounts = [
         {

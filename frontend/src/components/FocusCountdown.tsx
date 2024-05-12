@@ -6,14 +6,25 @@ import MONTHS from '@/utils/months';
 import useCountdown from '@/utils/useCountdown';
 
 export default function FocusCountdown({ countDown: { title, localizedDateTime, timeZone } }) {
-    const date = new Date(Date.parse(localizedDateTime));
+    const [date, setDate] = React.useState();
     const [time, setTime] = React.useState();
     const { sign, daysLeft, hoursLeft, minutesLeft, secondsLeft } = useCountdown(date);
 
     React.useEffect(() => {
-        setTime(getTwelveHourTime(date));
-    }, []);
+        const dateValue = new Date(Date.parse(localizedDateTime));
+        setDate(dateValue);
+    }, [localizedDateTime]);
+
+    React.useEffect(() => {
+        if (date) {
+            setTime(getTwelveHourTime(date));
+        }
+    }, [date]);
     // console.log(sign);
+    if (!sign) {
+        return (<div>Loading...</div>);
+    }
+
     return (
         <article className="container max-w-[48.5rem] mx-auto bg-base-300 rounded p-6">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
