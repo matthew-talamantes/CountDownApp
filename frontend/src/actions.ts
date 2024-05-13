@@ -159,3 +159,18 @@ export const getCountdownList = async (sharedWith = false, countList = []) => {
         return data;
     }
 };
+
+export const createCountdown = async (prevState: any, formData: FormData) => {
+    const session = await getSession();
+    session.save();
+    const url = `${process.env.BACKEND_URL}/counts/create/`;
+    const headers = getCredentialedHeaders(session);
+    const response = await fetch(url, { method: "POST", headers: headers, body: formData });
+    if (!response.ok) {
+        const errors = await response.json();
+        return { errors: errors };
+    } else {
+        const data = await response.json();
+        return data;
+    }
+};
