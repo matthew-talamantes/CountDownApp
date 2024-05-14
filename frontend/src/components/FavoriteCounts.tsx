@@ -3,6 +3,7 @@ import React from 'react';
 
 import FocusCountdown from "@/components/FocusCountdown";
 import FavoriteCountCard from "@/components/FavoriteCountCard";
+import CreateCountModal from '@/components/CreateCountModal';
 
 
 export default function FavoriteCounts() {
@@ -51,22 +52,30 @@ export default function FavoriteCounts() {
         obtainFollowingCounts();
     }, [profile]);
 
+    const showCreateCountModal = () => {
+        const modal = document.getElementById('create-count-modal');
+        modal.showModal();
+    };
+
     const getFillerCountdowns = () => {
         const fillerArray = new Array(6 - followingCountdowns.length).fill(0);
-        return fillerArray.map((_, index) => { return <div className="w-[25rem] min-h-[5.324rem] p-6 flex justify-center items-center bg-base-300 rounded"><span className="flex justify-center items-center text-8xl text-base-300 bg-base-100 rounded">+</span></div> });
+        return fillerArray.map((_, index) => { return <div key={index} className="w-[25rem] min-h-[5.324rem] p-6 flex justify-center items-center bg-base-300 rounded"><span onClick={showCreateCountModal} className="flex justify-center items-center text-8xl text-base-300 bg-base-100 rounded cursor-pointer">+</span></div> });
     };
 
     return (
-        <div className="container mx-auto my-8 min-h-[85dvh] flex flex-col justify-around items-center gap-6">
-            <section id="favorite-count">
-                <FocusCountdown countDown={favoriteCount} />
-            </section>
-            <section id="favorite-counts" className="flex flex-col md:flex-row md:flex-wrap justify-start md:justify-around items-stretch gap-4">
-                {followingCountdowns.map((countDown, index) => {
-                    return <FavoriteCountCard key={index} countDown={countDown} />;
-                })}
-                {followingCountdowns.length < 6 && <>{getFillerCountdowns()}</>}
-            </section>
-        </div>
+        <>
+            <div className="container mx-auto my-8 min-h-[85dvh] flex flex-col justify-around items-center gap-6">
+                <section id="favorite-count">
+                    <FocusCountdown countDown={favoriteCount} />
+                </section>
+                <section id="favorite-counts" className="flex flex-col md:flex-row md:flex-wrap justify-start md:justify-around items-stretch gap-4">
+                    {followingCountdowns.map((countDown, index) => {
+                        return <FavoriteCountCard key={index} countDown={countDown} />;
+                    })}
+                    {followingCountdowns.length < 6 && <>{getFillerCountdowns()}</>}
+                </section>
+            </div>
+            <CreateCountModal />
+        </>
     );
 }
